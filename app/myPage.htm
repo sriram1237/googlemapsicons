@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+ <title>Google Maps Multiple Markers</title> 
+<script
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+</script>
+<script 
+src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript">
+</script>
+</head> 
+<body>
+  <div id="map" style="width: 500px; height: 600px;"></div>
+
+  <script type="text/javascript">
+    var locations = [
+      ['chennai Beach', 13.047142,440.229719, 4],
+      ['vizag Beach', 17.6883, 83.2186, 5],
+      ['goa Beach', 15.29932, 74.12399, 3],
+      ['mumbai Beach', 18.9750, 72.8258, 2],
+      ['pondicherry Beach', 11.9310, 79.7852, 1]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 5,
+      center: new google.maps.LatLng(17.3660,78.4760),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map,
+        icon: iconBase + 'schools_maps.png'
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+</body>
+</html>
